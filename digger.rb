@@ -12,13 +12,14 @@ prompt = TTY::Prompt.new
 wrapper = Discogs::Wrapper.new('T1A3')
 auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk')
 
-# Grabs release info based on release ID number, returns release Title, Artist and Release date
+# Returns string with release info based on release ID number: Title, Artist and Release date
 def release_info(id)
   wrapper = Discogs::Wrapper.new('T1A3')
   release = wrapper.get_release(id)
   "'#{release['title']}' - #{release['artists'][0]['name']}, released #{release['released_formatted']}"
 end
 
+# Searches Discogs API for release ID based upon user input 
 def release_lookup(term, year, genre)
   auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk')
   auth_wrapper.search(term, style: genre, year: year, per_page: 10, type: :release, sort: 'have',
