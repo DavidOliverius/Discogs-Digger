@@ -1,9 +1,16 @@
 require "discogs"
 require "tty-prompt"
 
+# Disables Hashie error logs from output
+Hashie.logger.level = Logger.const_get 'ERROR'
+
 prompt = TTY::Prompt.new
 wrapper = Discogs::Wrapper.new("T1A3")
 auth_wrapper = Discogs::Wrapper.new("T1A3", user_token: "FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk")
+
+class Response < Hashie::Mash
+    disable_warnings
+  end
 
 #Grabs release info based on release ID number, returns release Title, Artist and Release date
 def release_info(id)
@@ -49,6 +56,7 @@ begin
     ██████╔╝██║██████╔╝╚█████╔╝╚█████╔╝╚██████╔╝██████╔╝  ██████╔╝██║╚██████╔╝╚██████╔╝███████╗██║░░██║
     ╚═════╝░╚═╝╚═════╝░░╚════╝░░╚════╝░░╚═════╝░╚═════╝░  ╚═════╝░╚═╝░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝
     "
+    puts "Welcome to the Discogs Digger!"
     genres = ["Techno", "Trance", "Progressive House", "Tech House", "Breaks", "Psy-Trance"]
     genre_select = prompt.select("What genre would you like to dig for?", genres)
 
