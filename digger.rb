@@ -16,16 +16,35 @@ auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjP
 def release_info(id)
   wrapper = Discogs::Wrapper.new('T1A3')
   release = wrapper.get_release(id)
-  "'#{release['title']}' - #{release['artists'][0]['name']}, released #{release['released_formatted']}"
+  "'#{release['title']}' - #{release['artists'][0]['name']}, released #{release['released_formatted']} - https://www.discogs.com/release/#{id}"
 end
 
-# Searches Discogs API for release ID based upon user input 
-def release_lookup(term, year, genre)
-  auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk')
-  auth_wrapper.search(term, style: genre, year: year, per_page: 10, type: :release, sort: 'have',
-                            sort_order: 'dsc').results.first.id
+# Searches Discogs API for random release ID based upon user input 
+def release_lookup(year_select, genre_select)
+    auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk')
+    pages = auth_wrapper.search('', style: genre_select, year: year_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc').pagination.items
+    pages = (pages / 2) + rand((pages / 2))
+    auth_wrapper.search('', style: genre_select, year: year_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc', page: pages).results.first.id
 end
 
+
+
+# def release_lookup(year_select, genre_select)
+#     auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk')
+#     pages = auth_wrapper.search('', style: genre_select, year: year_select, per_page: 1, type: :release, sort: 'have',
+#         sort_order: 'dsc').pagination.items
+#     pages / 2 + (rand(pages) / 2)
+#   end
+
+# pages = auth_wrapper.search('', style: genre, year: year, per_page: 1, type: :release, sort: 'have',
+#     sort_order: 'dsc').pagination.items
+
+# Algorithm to determine random release
+# def algo(pages)
+#     x = pages / 2 + (rand(pages) / 2)
+# end
+
+#
 genres = ['Techno', 'Trance', 'Progressive House', 'Tech House', 'Breaks', 'Psy-Trance']
 
 puts ColorizedString['
@@ -44,15 +63,13 @@ begin
 
   year_select = prompt.slider('Year', min: 1990, max: 2022, step: 1, default: 1990, required: true)
 
-  id = release_lookup('', year_select, genre_select)
-
-  puts 'Digger found:'
+  id = release_lookup(year_select, genre_select)
   result = release_info(id)
+  puts 'Digger found:'
+ 
 
   puts '-----'
-
   puts result
-
   puts '-----'
 # Error handling for cases where releases do not exist - eg, Psy-Trance releases in 1990
 rescue NoMethodError => e
