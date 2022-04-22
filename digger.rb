@@ -20,11 +20,11 @@ def release_info(id)
 end
 
 # Searches Discogs API for random release ID based upon user input 
-def release_lookup(year_select, genre_select)
+def release_lookup(year_select, genre_select, format_select)
     auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk')
-    pages = auth_wrapper.search('', style: genre_select, year: year_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc').pagination.items
+    pages = auth_wrapper.search('', style: genre_select, year: year_select, format: format_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc').pagination.items
     pages = (pages / 2) + rand((pages / 2))
-    auth_wrapper.search('', style: genre_select, year: year_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc', page: pages).results.first.id
+    auth_wrapper.search('', style: genre_select, year: year_select, format: format_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc', page: pages).results.first.id
 end
 
 
@@ -45,7 +45,9 @@ end
 # end
 
 #
-genres = ['Techno', 'Trance', 'Progressive House', 'Tech House', 'Breaks', 'Psy-Trance']
+genres = ['Techno', 'House', 'Trance', 'Progressive House', 'Tech House', 'Breaks', 'Psy-Trance', 'Electro', 'Progressive Trance']
+
+formats = {'Vinyl' => 'Vinyl', 'CD' => 'CD', 'All Formats' => ''}
 
 puts ColorizedString['
     8888888b. 8888888 .d8888b.   .d8888b.   .d88888b.   .d8888b.   .d8888b.     8888888b. 8888888 .d8888b.   .d8888b.  8888888888 8888888b.
@@ -59,18 +61,20 @@ puts ColorizedString['
 '].colorize(:yellow)
 puts ColorizedString["\nWelcome to the Discogs Digger! Use this app to dig for rare and obscured records!"].colorize(:magenta)
 begin
-  genre_select = prompt.select("\nWhat genre would you like to dig for?", genres, required: true)
+  format_select = prompt.select("What format would you like?", formats, required:true)
+  
+  genre_select = prompt.multi_select("\nWhat genre would you like to dig for?", genres, required: true)
+  genre_select = genre_select.join(", ")
 
   year_select = prompt.slider('Year', min: 1990, max: 2022, step: 1, default: 1990, required: true)
 
-  id = release_lookup(year_select, genre_select)
+  id = release_lookup(year_select, genre_select, format_select)
   result = release_info(id)
   puts 'Digger found:'
- 
-
   puts '-----'
   puts result
   puts '-----'
+
 # Error handling for cases where releases do not exist - eg, Psy-Trance releases in 1990
 rescue NoMethodError => e
   p 'No release exists with these parameters, please try something else.'
