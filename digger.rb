@@ -28,7 +28,7 @@ end
 def release_lookup(year_select, genre_select, format_select)
     auth_wrapper = Discogs::Wrapper.new('T1A3', user_token: 'FAQInfIhaulwQIEXXKPePjPYAngJoezTNKJuiBFk')
     pages = auth_wrapper.search('', style: genre_select, year: year_select, format: format_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc').pagination.items
-    pages = (pages / 2) + rand((pages / 2))
+    pages = (pages / 4) + rand((pages / 4) * 3)
     auth_wrapper.search('', style: genre_select, year: year_select, format: format_select, per_page: 1, type: :release, sort: 'have', sort_order: 'dsc', page: pages).results.first.id
 end
 
@@ -54,9 +54,6 @@ genres = ['Techno', 'House', 'Trance', 'Progressive House', 'Tech House', 'Break
 
 formats = {'Vinyl' => 'Vinyl', 'CD' => 'CD', 'All Formats' => ''}
 
-#File.open("digger_log.txt", "w")
-
-
 $stdout.clear_screen
 puts logo.asciify('DISCOGS DIGGER').colorize(:yellow)
 puts ColorizedString["Welcome to the Discogs Digger! Use this app to dig for rare and obscured records!"].colorize(:magenta)
@@ -71,6 +68,7 @@ begin
 
   id = release_lookup(year_select, genre_select, format_select)
   result = release_info(id)
+  $stdout.clear_screen
   puts 'Digger found:'
   puts '-----'
   puts result
