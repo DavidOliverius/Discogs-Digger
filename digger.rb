@@ -10,6 +10,7 @@ $VERBOSE = nil
 # Disables Hashie error logs from output
 Hashie.logger.level = Logger.const_get 'ERROR'
 
+# Class for Menu Choices
 class Menu
   attr_accessor :prompt
 
@@ -59,13 +60,13 @@ class Menu
   end
 end
 
+# Check if '/user' folder exists on start
 if Dir.exist?('user')
 else
   Dir.mkdir('user')
 end
 
-# Check if user_token.txt exists
-
+# Check if '/user/user_token.txt' exists
 $stdout.clear_screen
 begin
   token = File.open('user/user_token.txt')
@@ -129,12 +130,14 @@ def release_lookup(year_select, genre_select, format_select)
   end
 end
 
+# For formatting search result to string
 def release_info(id)
   wrapper = Discogs::Wrapper.new('T1A3')
   release = wrapper.get_release(id)
   "'#{release['title']}' - #{release['artists'][0]['name']}, released #{release['released_formatted']} - https://www.discogs.com/release/#{id} - #{release['styles']}"
 end
 
+# For printing search result to Terminal + 'user/digger_log.txt'
 def print_result(result)
   $stdout.clear_screen
   puts 'Digger found:'
@@ -158,6 +161,7 @@ id = release_lookup(year_select, genre_select, format_select)
 result = release_info(id)
 print_result(result)
 
+# Menu loop
 while menu
 
   case menu.again
