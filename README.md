@@ -103,9 +103,13 @@ I cannot guarantee it will work on any previous version or release.
 ## Implementation Plan:
 Used Trello to plan and mark progress when building the program.
 
+Trello board can be accessed here:
+[Trello Board](https://trello.com/b/uJWwFB9D/t1a3-terminal-assignment)
+
 A screenshot from the end of the project:
 
 ![Trello End Board](docs/trello_end.png)
+
 
 ## Style Guide:
 Following the [Ruby Style Guide](https://rubystyle.guide/) and using [Rubocop](https://rubocop.org/) to enforce styling.
