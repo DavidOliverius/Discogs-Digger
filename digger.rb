@@ -3,6 +3,7 @@ require 'tty-prompt'
 require 'colorize'
 require 'colorized_string'
 require 'artii'
+require 'io/console'
 
 # Disables Deprecated warning from Discogs-wrapper
 $VERBOSE = nil
