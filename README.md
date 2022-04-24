@@ -1,4 +1,4 @@
-# Discogs Digger App
+# Discogs Digger
 
 ### A tool to find rare and obscure music releases on the [Discogs](https://www.discogs.com/) database.
 
@@ -18,7 +18,15 @@ Make sure you have Ruby installed. In your terminal run:
 ```
 $ ruby -v
 ```
-To check what version of Ruby you have installed on your machine. macOS releases since El Capitan [should have](https://www.ruby-lang.org/en/documentation/installation/#:~:text=Homebrew%20(macOS),El%20Capitan%20(10.11).) a version of Ruby already installed.
+To check what version of Ruby you have installed on your machine.
+
+macOS releases since El Capitan [should have](https://www.ruby-lang.org/en/documentation/installation/#:~:text=Homebrew%20(macOS),El%20Capitan%20(10.11).) a version of Ruby already installed. 
+
+If not 2.7.5 or higher, consider updating with:
+
+```
+$ brew install ruby
+```
 
 Once you have confirmed that Ruby is installed, [download](https://github.com/DavidOliverius/DiggerApp/archive/refs/heads/main.zip) this repository to your local machine.
 
