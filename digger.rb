@@ -59,6 +59,11 @@ class Menu
   end
 end
 
+if Dir.exist?('user')
+else
+  Dir.mkdir('user')
+end
+
 # Check if user_token.txt exists
 
 $stdout.clear_screen
@@ -73,17 +78,17 @@ end
 
 # Allows user to print log from Command Line
 if ARGV[0] == '-l' || ARGV[0] == '-log' || ARGV[0] == 'log'
-    puts File.foreach("user/digger_log.txt") { |line| puts line }
-    exit
+  puts File.foreach('user/digger_log.txt') { |line| puts line }
+  exit
 end
 
 # Allows user to input personal Discogs token from Command Line
 if ARGV[0] == '-t' || ARGV[0] == '-token' || ARGV[0] == 'token'
-    user_input = ARGV[1]
-    File.write('user/user_token.txt', user_input.strip)
-    puts "Thank you, your personal access token is now: #{user_input}"
-    sleep(2)
-    exit
+  user_input = ARGV[1]
+  File.write('user/user_token.txt', user_input.strip)
+  puts "Thank you, your personal access token is now: #{user_input}"
+  sleep(2)
+  exit
 end
 
 token = File.open('user/user_token.txt')
