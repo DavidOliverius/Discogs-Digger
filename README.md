@@ -2,7 +2,7 @@
 
 ### A tool to find rare and obscure music releases on the [Discogs](https://www.discogs.com/) database.
 
-### repo: [https://github.com/DavidOliverius/DiggerApp](https://github.com/DavidOliverius/DiggerApp)
+### repo: [https://github.com/DavidOliverius/Discogs-Digger](https://github.com/DavidOliverius/Discogs-Digger)
 ---
 ## Authentication:
 IMPORTANT - A personal access token is required to search using the Discogs API.
