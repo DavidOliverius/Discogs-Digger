@@ -3,7 +3,6 @@ require 'tty-prompt'
 require 'colorize'
 require 'colorized_string'
 require 'artii'
-require 'io/console'
 
 # Disables Deprecated warning from Discogs-wrapper
 $VERBOSE = nil
@@ -70,6 +69,21 @@ rescue StandardError
   puts 'Access Token:'
   user_input = gets
   File.write('user/user_token.txt', user_input.strip)
+end
+
+# Allows user to print log from Command Line
+if ARGV[0] == '-l'
+    puts File.foreach("user/digger_log.txt") { |line| puts line }
+    exit
+end
+
+# Allows user to input personal Discogs token from Command Line
+if ARGV[0] == '-t'
+    puts 'Welcome! For first time setup, please generate your personal access token at https://www.discogs.com/settings/developers'
+    puts 'Access Token:'
+    user_input = ARGV[1]
+    File.write('user/user_token.txt', user_input.strip)
+    exit
 end
 
 token = File.open('user/user_token.txt')
