@@ -72,13 +72,13 @@ rescue StandardError
 end
 
 # Allows user to print log from Command Line
-if ARGV[0] == '-l'
+if ARGV[0] == '-l' || ARGV[0] == '-log' || ARGV[0] == 'log'
     puts File.foreach("user/digger_log.txt") { |line| puts line }
     exit
 end
 
 # Allows user to input personal Discogs token from Command Line
-if ARGV[0] == '-t'
+if ARGV[0] == '-t' || ARGV[0] == '-token' || ARGV[0] == 'token'
     user_input = ARGV[1]
     File.write('user/user_token.txt', user_input.strip)
     puts "Thank you, your personal access token is now: #{user_input}"
@@ -137,7 +137,7 @@ def print_result(result)
   puts result
   puts '-----'
   File.write('user/digger_log.txt', "#{@time.strftime('%Y-%m-%d %H:%M:%S')} - #{result}\n", mode: 'a')
-  puts ColorizedString['Written to user/digger_log.txt'].colorize(:yellow)
+  puts ColorizedString['Results written to user/digger_log.txt'].colorize(:yellow)
   puts '-----'
 end
 
