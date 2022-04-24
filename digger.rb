@@ -79,10 +79,10 @@ end
 
 # Allows user to input personal Discogs token from Command Line
 if ARGV[0] == '-t'
-    puts 'Welcome! For first time setup, please generate your personal access token at https://www.discogs.com/settings/developers'
-    puts 'Access Token:'
     user_input = ARGV[1]
     File.write('user/user_token.txt', user_input.strip)
+    puts "Thank you, your personal access token is now: #{user_input}"
+    sleep(2)
     exit
 end
 
